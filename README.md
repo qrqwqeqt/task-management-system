@@ -19,16 +19,19 @@ This system allows development teams to efficiently manage tasks, track progress
 The application follows a modular architecture with the following components:
 
 1. Task Module
+
    - Task CRUD operations
    - Task assignment
    - Status tracking
 
 2. User Module
+
    - Authentication
    - Role-based access control
    - User profile management
 
 3. Analytics Module
+
    - Performance metrics
    - Activity tracking
    - Report generation
@@ -57,22 +60,26 @@ The application follows a modular architecture with the following components:
 ### Installation
 
 1. Clone the repository:
+
 ```bash
 git clone https://github.com/yourusername/task-management-system.git
 cd task-management-system
 ```
 
 2. Install dependencies:
+
 ```bash
 npm install
 ```
 
 3. Create configuration file:
+
 ```bash
 cp .env.example .env
 ```
 
 4. Start the development server:
+
 ```bash
 npm run dev
 ```
