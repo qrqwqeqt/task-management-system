@@ -212,7 +212,141 @@ flowchart TB
     class Gateway,RateLimit,Logger,Auth,CORS,Validator service
     class MainDB,ReplicaDB,Redis,MemCache database
 ```
+# Entity-Relationship Diagram (ERD)
 
+```mermaid
+erDiagram
+    USER ||--o{ TASK : creates
+    USER ||--o{ TASK : assigned_to
+    USER ||--o{ USER_ROLE : has
+    USER ||--o{ USER_SESSION : maintains
+    USER ||--o{ NOTIFICATION : receives
+    TASK ||--o{ TASK_HISTORY : logs
+    TASK ||--o{ TASK_COMMENT : has
+    TASK ||--o{ TASK_ATTACHMENT : contains
+    TASK }|--|| TASK_STATUS : has
+    TASK }|--|| TASK_PRIORITY : has
+    TASK ||--o{ NOTIFICATION : generates
+    
+    USER {
+        uuid id PK
+        string email UK
+        string password_hash
+        string first_name
+        string last_name
+        boolean is_active
+        string avatar_url
+        datetime last_login
+        datetime created_at
+        datetime updated_at
+    }
+
+    USER_ROLE {
+        uuid id PK
+        uuid user_id FK
+        string role_name
+        json permissions
+        datetime created_at
+    }
+
+    USER_SESSION {
+        uuid id PK
+        uuid user_id FK
+        string token
+        datetime expires_at
+        string ip_address
+        string user_agent
+        datetime created_at
+    }
+
+    TASK {
+        uuid id PK
+        string title
+        text description
+        uuid creator_id FK
+        uuid assignee_id FK
+        uuid status_id FK
+        uuid priority_id FK
+        datetime due_date
+        datetime completed_at
+        integer estimated_hours
+        integer actual_hours
+        text tags
+        datetime created_at
+        datetime updated_at
+    }
+
+    TASK_STATUS {
+        uuid id PK
+        string name
+        string color
+        integer order
+        boolean is_default
+        datetime created_at
+    }
+
+    TASK_PRIORITY {
+        uuid id PK
+        string name
+        string color
+        integer level
+        boolean is_default
+        datetime created_at
+    }
+
+    TASK_HISTORY {
+        uuid id PK
+        uuid task_id FK
+        uuid user_id FK
+        string action
+        json previous_state
+        json new_state
+        datetime created_at
+    }
+
+    TASK_COMMENT {
+        uuid id PK
+        uuid task_id FK
+        uuid user_id FK
+        text content
+        uuid parent_id FK
+        boolean is_edited
+        datetime created_at
+        datetime updated_at
+    }
+
+    TASK_ATTACHMENT {
+        uuid id PK
+        uuid task_id FK
+        uuid user_id FK
+        string file_name
+        string file_type
+        string file_url
+        integer file_size
+        datetime created_at
+    }
+
+    NOTIFICATION {
+        uuid id PK
+        uuid user_id FK
+        uuid task_id FK
+        string type
+        string title
+        text content
+        boolean is_read
+        datetime read_at
+        datetime created_at
+    }
+
+    ANALYTICS_LOG {
+        uuid id PK
+        uuid user_id FK
+        uuid task_id FK
+        string event_type
+        json event_data
+        datetime created_at
+    }
+```
 
 ## Contributing
 
