@@ -105,6 +105,7 @@ task-management-system/
 
 # Project Architecture Diagram
 
+```mermaid
 flowchart TB
     subgraph Client["Client Layer"]
         WebApp["Web Application"]
