@@ -211,7 +211,7 @@ flowchart TB
     class TaskModule,UserModule,AnalyticsModule,NotificationModule module
     class Gateway,RateLimit,Logger,Auth,CORS,Validator service
     class MainDB,ReplicaDB,Redis,MemCache database
-
+```
 
 
 ## Contributing
