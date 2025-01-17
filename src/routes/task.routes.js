@@ -6,7 +6,10 @@ const router = Router();
 const taskService = new TaskService();
 const taskController = new TaskController(taskService);
 
-router.post('/', taskController.createTask.bind(taskController));
-router.get('/', taskController.getTasks.bind(taskController));
+router.get('/', (req, res) => taskController.getAllTasks(req, res));
+router.get('/:id', (req, res) => taskController.getTaskById(req, res));
+router.post('/', (req, res) => taskController.createTask(req, res));
+router.put('/:id', (req, res) => taskController.updateTask(req, res));
+router.delete('/:id', (req, res) => taskController.deleteTask(req, res));
 
 export default router;

@@ -1,26 +1,21 @@
 export class Task {
-    constructor({
-      id,
-      title,
-      description,
-      status,
-      priority,
-      creatorId,
-      assigneeId,
-      dueDate,
-      createdAt,
-      updatedAt,
-    }) {
-      this.id = id;
-      this.title = title;
-      this.description = description;
-      this.status = status;
-      this.priority = priority;
-      this.creatorId = creatorId;
-      this.assigneeId = assigneeId;
-      this.dueDate = dueDate;
-      this.createdAt = createdAt;
-      this.updatedAt = updatedAt;
-    }
+  constructor(data) {
+    this.id = data.id;
+    this.title = data.title;
+    this.description = data.description;
+    this.status = data.status;
+    this.priority = data.priority;
+    this.creatorId = data.creatorId;
+    this.assigneeId = data.assigneeId;
+    this.dueDate = data.dueDate;
+    this.createdAt = data.createdAt;
+    this.updatedAt = data.updatedAt;
   }
-  
+
+  validate() {
+    if (!this.title) throw new Error('Title is required');
+    if (!this.status) throw new Error('Status is required');
+    if (!this.priority) throw new Error('Priority is required');
+    if (!this.creatorId) throw new Error('Creator ID is required');
+  }
+}
