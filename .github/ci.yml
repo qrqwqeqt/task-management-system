@@ -1,4 +1,4 @@
-name: CI
+name: CI/CD Pipeline
 
 on:
   push:
@@ -7,7 +7,8 @@ on:
     branches: [ main ]
 
 jobs:
-  test:
+  ci:
+    name: Continuous Integration
     runs-on: ubuntu-latest
 
     steps:
@@ -34,14 +35,62 @@ jobs:
     - name: Build
       run: npm run build || true
 
-  deploy:
-    needs: test
+  cd:
+    name: Continuous Deployment
+    needs: ci
     if: github.ref == 'refs/heads/main'
     runs-on: ubuntu-latest
     
     steps:
+    - uses: actions/checkout@v4
+
+    - name: Create deployment
+      uses: bobheadxi/deployments@v1
+      id: deployment
+      with:
+        step: start
+        token: ${{ secrets.GITHUB_TOKEN }}
+        env: production
+        desc: Deploy to Render production environment
+
     - name: Deploy to Render
+      id: deploy
       uses: johnbeynon/render-deploy-action@v0.0.8
       with:
         service-id: ${{ secrets.RENDER_SERVICE_ID }}
         api-key: ${{ secrets.RENDER_API_KEY }}
+
+    - name: Wait for deploy
+      run: |
+        echo "Waiting for deployment to complete..."
+        sleep 30  # Даем время на развертывание
+
+    - name: Verify deployment
+      run: |
+        STATUS_CODE=$(curl -s -o /dev/null -w "%{http_code}" ${{ secrets.RENDER_APP_URL }})
+        if [ $STATUS_CODE -eq 200 ]; then
+          echo "Deployment verified successfully!"
+        else
+          echo "Deployment verification failed!"
+          exit 1
+        fi
+
+    - name: Update deployment status
+      uses: bobheadxi/deployments@v1
+      if: always()
+      with:
+        step: finish
+        token: ${{ secrets.GITHUB_TOKEN }}
+        status: ${{ job.status }}
+        env: production
+        deployment_id: ${{ steps.deployment.outputs.deployment_id }}
+
+    - name: Notify on success
+      if: success()
+      run: |
+        echo "::notice::Deployment to Render completed successfully! URL: ${{ secrets.RENDER_APP_URL }}"
+
+    - name: Notify on failure
+      if: failure()
+      run: |
+        echo "::error::Deployment to Render failed!"
