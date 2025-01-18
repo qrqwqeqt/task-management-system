@@ -5,7 +5,6 @@ import { Task } from '../models/task.model.js';
 
 dotenv.config();
 
-
 const seedData = async () => {
   try {
     await mongoose.connect(process.env.MONGODB_URI);
@@ -19,17 +18,16 @@ const seedData = async () => {
         email: 'john@example.com',
         firstName: 'John',
         lastName: 'Doe',
-        role: 'ADMIN'
+        role: 'ADMIN',
       },
       {
         email: 'jane@example.com',
         firstName: 'Jane',
         lastName: 'Smith',
-        role: 'USER'
-      }
+        role: 'USER',
+      },
     ]);
 
-    
     await Task.create([
       {
         title: 'Implement user authentication',
@@ -38,7 +36,7 @@ const seedData = async () => {
         priority: 'HIGH',
         creatorId: users[0]._id,
         assigneeId: users[1]._id,
-        dueDate: new Date('2025-02-01')
+        dueDate: new Date('2025-02-01'),
       },
       {
         title: 'Create API documentation',
@@ -47,8 +45,8 @@ const seedData = async () => {
         priority: 'MEDIUM',
         creatorId: users[1]._id,
         assigneeId: users[0]._id,
-        dueDate: new Date('2025-02-15')
-      }
+        dueDate: new Date('2025-02-15'),
+      },
     ]);
 
     console.log('Database seeded successfully');

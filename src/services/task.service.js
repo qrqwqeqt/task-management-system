@@ -11,7 +11,7 @@ export class TaskService {
     const task = await Task.findById(id)
       .populate('creatorId', 'firstName lastName')
       .populate('assigneeId', 'firstName lastName');
-    
+
     if (!task) {
       throw new Error('Task not found');
     }
@@ -24,11 +24,10 @@ export class TaskService {
   }
 
   async updateTask(id, taskData) {
-    const task = await Task.findByIdAndUpdate(
-      id,
-      taskData,
-      { new: true, runValidators: true }
-    );
+    const task = await Task.findByIdAndUpdate(id, taskData, {
+      new: true,
+      runValidators: true,
+    });
 
     if (!task) {
       throw new Error('Task not found');
