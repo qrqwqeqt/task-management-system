@@ -4,8 +4,7 @@ import { User } from '../models/user.model.js';
 import { Task } from '../models/task.model.js';
 
 dotenv.config();
-console.log('MONGODB_URI:', process.env.PORT);
-console.log('MONGODB_URI:', process.env.MONGODB_URI);
+
 
 const seedData = async () => {
   try {
