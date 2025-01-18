@@ -1,4 +1,5 @@
 import mongoose from 'mongoose';
+import { User } from './user.model.js';
 
 const taskSchema = new mongoose.Schema(
   {
@@ -36,7 +37,8 @@ const taskSchema = new mongoose.Schema(
   },
   {
     timestamps: true,
-  },
+  }
 );
 
-export const Task = mongoose.model('Task', taskSchema);
+const Task = mongoose.model('Task', taskSchema);
+export { Task };  // Change to named export
