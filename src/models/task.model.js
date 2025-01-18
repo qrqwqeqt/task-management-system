@@ -1,21 +1,39 @@
-export class Task {
-  constructor(data) {
-    this.id = data.id;
-    this.title = data.title;
-    this.description = data.description;
-    this.status = data.status;
-    this.priority = data.priority;
-    this.creatorId = data.creatorId;
-    this.assigneeId = data.assigneeId;
-    this.dueDate = data.dueDate;
-    this.createdAt = data.createdAt;
-    this.updatedAt = data.updatedAt;
-  }
+import mongoose from 'mongoose';
 
-  validate() {
-    if (!this.title) throw new Error('Title is required');
-    if (!this.status) throw new Error('Status is required');
-    if (!this.priority) throw new Error('Priority is required');
-    if (!this.creatorId) throw new Error('Creator ID is required');
+const taskSchema = new mongoose.Schema({
+  title: {
+    type: String,
+    required: [true, 'Title is required'],
+    trim: true
+  },
+  description: {
+    type: String,
+    trim: true
+  },
+  status: {
+    type: String,
+    enum: ['TODO', 'IN_PROGRESS', 'DONE'],
+    default: 'TODO'
+  },
+  priority: {
+    type: String,
+    enum: ['LOW', 'MEDIUM', 'HIGH'],
+    default: 'MEDIUM'
+  },
+  creatorId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User',
+    required: true
+  },
+  assigneeId: {
+    type: mongoose.Schema.Types.ObjectId,
+    ref: 'User'
+  },
+  dueDate: {
+    type: Date
   }
-}
+}, {
+  timestamps: true
+});
+
+export const Task = mongoose.model('Task', taskSchema);
