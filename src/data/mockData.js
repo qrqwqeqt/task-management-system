@@ -9,7 +9,7 @@ export const mockTasks = [
     assigneeId: '2',
     dueDate: '2025-02-01',
     createdAt: '2025-01-16',
-    updatedAt: '2025-01-16'
+    updatedAt: '2025-01-16',
   },
   {
     id: '2',
@@ -21,8 +21,8 @@ export const mockTasks = [
     assigneeId: '1',
     dueDate: '2025-02-15',
     createdAt: '2025-01-16',
-    updatedAt: '2025-01-16'
-  }
+    updatedAt: '2025-01-16',
+  },
 ];
 
 export const mockUsers = [
@@ -33,7 +33,7 @@ export const mockUsers = [
     lastName: 'Doe',
     role: 'ADMIN',
     createdAt: '2025-01-16',
-    updatedAt: '2025-01-16'
+    updatedAt: '2025-01-16',
   },
   {
     id: '2',
@@ -42,6 +42,6 @@ export const mockUsers = [
     lastName: 'Smith',
     role: 'USER',
     createdAt: '2025-01-16',
-    updatedAt: '2025-01-16'
-  }
+    updatedAt: '2025-01-16',
+  },
 ];

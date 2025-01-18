@@ -129,19 +129,19 @@ flowchart TB
             TaskController["Task Controller"]
             TaskEvents["Task Event Handler"]
         end
-        
+
         subgraph UserModule["User Management Module"]
             UserService["User Service"]
             UserController["User Controller"]
             AuthService["Auth Service"]
         end
-        
+
         subgraph AnalyticsModule["Analytics Module"]
             AnalyticsService["Analytics Service"]
             AnalyticsController["Analytics Controller"]
             ReportGenerator["Report Generator"]
         end
-        
+
         subgraph NotificationModule["Notification Module"]
             NotificationService["Notification Service"]
             EmailSender["Email Sender"]
@@ -154,12 +154,12 @@ flowchart TB
             Redis["Redis Cache"]
             MemCache["Memory Cache"]
         end
-        
+
         subgraph DB["Database Layer"]
             MainDB["Primary Database"]
             ReplicaDB["Replica Database"]
         end
-        
+
         subgraph Storage["File Storage"]
             S3["Document Storage"]
             LocalFS["Local Storage"]
@@ -175,29 +175,29 @@ flowchart TB
     %% Client to API connections
     WebApp --> Gateway
     Mobile --> Gateway
-    
+
     %% API Layer connections
     Gateway --> RateLimit
     Gateway --> Logger
     Gateway --> Security
-    
+
     %% Security to Core connections
     Security --> TaskModule
     Security --> UserModule
     Security --> AnalyticsModule
-    
+
     %% Core Module interconnections
     TaskModule --> NotificationModule
     TaskModule --> AnalyticsModule
     UserModule --> NotificationModule
-    
+
     %% Core to Data connections
     TaskModule --> Cache
     TaskModule --> DB
     UserModule --> DB
     AnalyticsModule --> DB
     AnalyticsModule --> Cache
-    
+
     %% External service connections
     NotificationModule --> EmailProvider
     AnalyticsModule --> Analytics
@@ -207,11 +207,12 @@ flowchart TB
     classDef module fill:#f9f,stroke:#333,stroke-width:2px
     classDef service fill:#bbf,stroke:#333,stroke-width:2px
     classDef database fill:#dfd,stroke:#333,stroke-width:2px
-    
+
     class TaskModule,UserModule,AnalyticsModule,NotificationModule module
     class Gateway,RateLimit,Logger,Auth,CORS,Validator service
     class MainDB,ReplicaDB,Redis,MemCache database
 ```
+
 # Entity-Relationship Diagram (ERD)
 
 ```mermaid
@@ -227,7 +228,7 @@ erDiagram
     TASK }|--|| TASK_STATUS : has
     TASK }|--|| TASK_PRIORITY : has
     TASK ||--o{ NOTIFICATION : generates
-    
+
     USER {
         uuid id PK
         string email UK
